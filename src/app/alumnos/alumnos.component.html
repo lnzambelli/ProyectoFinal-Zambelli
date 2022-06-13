@@ -1,0 +1,14 @@
+<mat-tab-group>
+    <mat-tab label="Listado">  
+        <app-listado-alumnos [encabezados]="encabezados" [arrAlumnos]="arrAlumnos"></app-listado-alumnos>
+    </mat-tab>
+    <mat-tab label="Abm">  
+        <app-formulario-alumnos (alumnoAgregado)="agregarAlumno($event)" 
+                                [estudianteAActualizar]="estudianteAActualizar"></app-formulario-alumnos>
+        <app-listado-alumnos [encabezados]="encabezadosABM" 
+                            [arrAlumnos]="arrAlumnos" 
+                            (alumnoParaEditar)="alumnoAEditar($event)"
+                            (alumnoParaEliminar)="alumnoAEliminar($event)">
+        </app-listado-alumnos>
+    </mat-tab>
+</mat-tab-group>
