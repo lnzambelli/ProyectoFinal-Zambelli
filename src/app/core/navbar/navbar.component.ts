@@ -16,8 +16,14 @@ export class NavbarComponent implements OnInit {
   closeDashboard(){
     sessionStorage.removeItem('usuario')
     sessionStorage.removeItem('permisoAdm')
-    this.router.navigate(['login'])
-    location.reload()
+    this.router.navigate(['/dashboard'])
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
+  }
+
+  goToLogin(){
+    this.router.navigate(['/login'])
   }
 
 

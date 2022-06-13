@@ -4,11 +4,11 @@
     <button mat-button class="nameButton">{{nameUsers | uppercase}}</button>
      -->
      <!-- info para estudiantes -->
-     <button mat-button (click)="navigateTo('personal')">Mis Datos</button>
+     <button mat-button (click)="navigateTo('personal')" disabled="{{nombre==null }}">Mis Datos</button>
      
     <!-- info para administradores -->
-    <button mat-button (click)="navigateTo('alumnos')" *ngIf="permiso">Alumnos</button>
-    <button mat-button (click)="navigateTo('cursos')"  *ngIf="permiso" >Cursos</button>
-    <button mat-button (click)="navigateTo('inscripciones')"  *ngIf="permiso">Inscripciones</button>
+    <button mat-button (click)="navigateTo('alumnos')" disabled="{{nombre==null  ||  permiso=='false'}}">Alumnos</button>
+    <button mat-button (click)="navigateTo('cursos')"  disabled="{{nombre==null  ||  permiso=='false'}}">Cursos</button>
+    <button mat-button (click)="navigateTo('inscripciones')" disabled="{{nombre==null  ||  permiso=='false'}}">Inscripciones</button>
    
 </div>

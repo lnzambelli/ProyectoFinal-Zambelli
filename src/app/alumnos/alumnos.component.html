@@ -1,8 +1,9 @@
+<h1 [title]>MENU DE ALUMNOS</h1>
 <mat-tab-group>
-    <mat-tab label="Listado">  
+    <mat-tab label="Listado de Alumnos">  
         <app-listado-alumnos [encabezados]="encabezados" [arrAlumnos]="arrAlumnos"></app-listado-alumnos>
     </mat-tab>
-    <mat-tab label="Abm">  
+    <mat-tab label="ABM Alumnos">  
         <app-formulario-alumnos (alumnoAgregado)="agregarAlumno($event)" 
                                 [estudianteAActualizar]="estudianteAActualizar"></app-formulario-alumnos>
         <app-listado-alumnos [encabezados]="encabezadosABM" 

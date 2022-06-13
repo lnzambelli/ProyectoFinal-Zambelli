@@ -53,6 +53,10 @@ export class AuthComponent implements OnInit {
     })
     if(this.isLoggedIn){
       this.router.navigate(['personal']);
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+      
     }else{
       this.isLoggedIn=false;
         this.snackBar.open(`Error: No existe el usuario ingresado`, 'close')

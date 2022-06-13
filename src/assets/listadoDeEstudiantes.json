@@ -10,7 +10,7 @@
       },
       {
         "id": 2,
-        "nombre": "Nicolas ",
+        "nombre": "Nicolas",
         "dni": "35150123",
         "email": "nicolas@coder.com",
         "tienePermisoAdmin": "true",
@@ -18,7 +18,7 @@
       },
       {
         "id": 3,
-        "nombre": "Jose ",
+        "nombre": "Jose",
         "dni": "38999343",
         "email": "jose@coder.com",
         "tienePermisoAdmin": "false",
