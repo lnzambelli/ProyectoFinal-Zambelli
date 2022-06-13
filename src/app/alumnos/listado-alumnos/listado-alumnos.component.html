@@ -1,3 +1,14 @@
+<mat-card class="card">
+    <mat-form-field appearance="standard" class="filtroContainer">
+        <mat-label>Filtrar por nombre</mat-label>
+        <input matInput (keyup)="applicarFiltro($event)" placeholder="Filtro" #input>
+    </mat-form-field>
+    <div >
+        <mat-card class="encontrados" *ngFor="let stud of this.arrEncontrados">Se encontro el alumno {{stud.nombre}} en la posicion {{stud.id}}</mat-card>
+    </div>
+   
+</mat-card>
+
 <table mat-table [dataSource]="arrAlumnos" class="tableContainer" #table>
 
     <ng-container [matColumnDef]="column" *ngFor="let column of encabezados ">
