@@ -6,7 +6,6 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -14,14 +13,12 @@ import { AuthGuard } from './guards/auth.guard';
     NavbarComponent,
     FooterComponent,
     SidemenuComponent,
- 
   ],
   imports: [
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    
   ],
   exports:[
     NavbarComponent,
