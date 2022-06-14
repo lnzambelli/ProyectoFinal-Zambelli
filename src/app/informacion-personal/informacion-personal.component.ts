@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Curso } from '../core/modelos/curso';
 
+
 @Component({
   selector: 'app-informacion-personal',
   templateUrl: './informacion-personal.component.html',
@@ -16,6 +17,7 @@ export class InformacionPersonalComponent implements OnInit {
   arrAlumnos: Estudiante[] = []
   arrCursos: Curso[] = []
   alumnoIngresado!: Estudiante
+
 
   constructor(private alumnosServices: AlumnosService, private cursosServices: CursosService ) { }
 
@@ -53,5 +55,26 @@ export class InformacionPersonalComponent implements OnInit {
   ngOnDestroy(){
     this.subscriptions.unsubscribe()
   }
+
+  agregarAlumno(e: any){
+    let index=1;
+    if(this.arrAlumnos.length>0){
+      if(!e.id){
+        index=this.arrAlumnos.length+1;
+        e.id=index;
+        this.arrAlumnos.push(e);
+      }else{
+        let index=this.arrAlumnos.findIndex((x:Estudiante)=>x.id===e.id);
+        this.arrAlumnos[index]=e;
+      }
+      this.arrAlumnos = this.arrAlumnos.filter(stud => stud.id !== e.index) 
+    }else{
+      e.id=index;
+      this.arrAlumnos.push(e)
+      this.arrAlumnos = this.arrAlumnos.filter(stud => stud.id !== e.index)
+    }
+    this.alumnosServices.studentList = this.arrAlumnos
+  }
+
 
 }

@@ -1,16 +1,16 @@
-import { Estudiante } from './../../core/modelos/estudiante';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Estudiante } from 'src/app/core/modelos/estudiante';
 
 @Component({
-  selector: 'app-formulario-alumnos',
-  templateUrl: './formulario-alumnos.component.html',
-  styleUrls: ['./formulario-alumnos.component.scss']
+  selector: 'app-formulario-actualizacion',
+  templateUrl: './formulario-actualizacion.component.html',
+  styleUrls: ['./formulario-actualizacion.component.scss']
 })
-export class FormularioAlumnosComponent implements OnChanges{
+export class FormularioActualizacionComponent {
 
+  @Input() estudianteAActualizar!: Estudiante;
   @Output() alumnoAgregado = new EventEmitter<Estudiante>(); 
-  @Input() estudianteAActualizar!: Estudiante; 
 
   estaCreando: boolean = false;
   createForm!: FormGroup;
@@ -34,21 +34,19 @@ export class FormularioAlumnosComponent implements OnChanges{
       this.createForm.get('email')?.patchValue(this.estudianteAActualizar.email);
       this.createForm.get('tienePermisoAdmin')?.patchValue(this.estudianteAActualizar.tienePermisoAdmin);
     }
-
   }
   
-
   onSubmit(): void {
     this.estaCreando = true;
     if(!this.estudianteAActualizar){
-      this.alumnoAgregado.emit(this.createForm.value)
+     
     }else{
       this.createForm.value['id']=this.estudianteAActualizar.id
       let vendedorEdited=this.createForm.value;
       this.alumnoAgregado.emit(vendedorEdited)
+      sessionStorage.setItem('usuario', vendedorEdited.nombre)
     }
     setTimeout(() => {
-      this.createForm.reset()
       this.estaCreando = false;
     }, 1000);
   }
