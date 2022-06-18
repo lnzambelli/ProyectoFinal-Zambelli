@@ -22,4 +22,13 @@ export class SidemenuComponent implements OnInit {
       this.router.navigate([urlNavigate])
   }
 
+  logout(){
+    sessionStorage.removeItem('usuario')
+    sessionStorage.removeItem('permisoAdm')
+    this.router.navigate(['/login'])
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
+  }
+
 }

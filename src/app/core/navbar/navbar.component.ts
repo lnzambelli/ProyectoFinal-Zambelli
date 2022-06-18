@@ -8,23 +8,12 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  nombreUsuario: string =""
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.nombreUsuario = sessionStorage.getItem('usuario') || "";
   }
-
-  closeDashboard(){
-    sessionStorage.removeItem('usuario')
-    sessionStorage.removeItem('permisoAdm')
-    this.router.navigate(['/dashboard'])
-    setTimeout(() => {
-      location.reload();
-    }, 2000);
-  }
-
-  goToLogin(){
-    this.router.navigate(['/login'])
-  }
-
 
 }

@@ -10,5 +10,7 @@
     <button mat-button (click)="navigateTo('alumnos')" disabled="{{nombre==null  ||  permiso=='true'}}">Alumnos</button>
     <button mat-button (click)="navigateTo('cursos')"  disabled="{{nombre==null  ||  permiso=='true'}}">Cursos</button>
     <button mat-button (click)="navigateTo('inscripciones')" disabled="{{nombre==null  ||  permiso=='true'}}">Inscripciones</button>
+
+    <button mat-button (click)="logout()" disabled="{{nombre==null}}">logOut</button>
    
 </div>
