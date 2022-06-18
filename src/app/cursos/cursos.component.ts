@@ -24,27 +24,31 @@ export class CursosComponent implements OnInit {
 
   obtenerCursos(){
       this.subscriptions=new Subscription();
-      this.subscriptions.add(this.cursosServices.getCursos().subscribe(cursos => this.arrCursos=cursos))
+      this.subscriptions.add(this.cursosServices.getCourseList().subscribe(cursos => this.arrCursos=cursos))
   }
 
   agregarCurso(e: any){
-    let index=1;
-    if(this.arrCursos.length>0){
-      if(!e.id){
-        index=this.arrCursos.length+1;
-        e.id=index;
-        this.arrCursos.push(e);
-      }else{
-        let index=this.arrCursos.findIndex((x:Curso)=>x.id===e.id);
-        this.arrCursos[index]=e;
-      }
-      this.arrCursos = this.arrCursos.filter(stud => stud.id !== e.index) 
-    }else{
-      e.id=index;
-      this.arrCursos.push(e)
-      this.arrCursos = this.arrCursos.filter(stud => stud.id !== e.index)
+    console.log(e)
+    let cursoEncontrado = false;
+    this.arrCursos.find((al) => {
+      if (al.id == e.id){
+        cursoEncontrado=true
+      } 
+    })
+    if (!cursoEncontrado){
+      this.cursosServices.createCourse(e).subscribe(
+        ()=>{
+          this.obtenerCursos();
+        }
+      )
     }
-    this.cursosServices.cursoList = this.arrCursos
+    else{
+      this.cursosServices.updateCourse(e).subscribe(
+        ()=>{
+          this.obtenerCursos();
+        }
+      )
+    }
   }
 
   cursoAEditar(e:Curso){
@@ -52,8 +56,11 @@ export class CursosComponent implements OnInit {
   }
 
   cursoAEliminar(e:Curso){
-    this.arrCursos = this.arrCursos.filter(stud => stud.id !== e.id)
-    this.cursosServices.cursoList = this.arrCursos;
+    this.cursosServices.deleteCourse(e).subscribe(
+      ()=>{
+        this.obtenerCursos();
+      }
+    )
   }
 
   ngOnDestroy(){

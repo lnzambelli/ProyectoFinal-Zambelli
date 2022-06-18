@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Estudiante } from 'src/app/core/modelos/estudiante';
 
@@ -7,7 +7,7 @@ import { Estudiante } from 'src/app/core/modelos/estudiante';
   templateUrl: './formulario-actualizacion.component.html',
   styleUrls: ['./formulario-actualizacion.component.scss']
 })
-export class FormularioActualizacionComponent {
+export class FormularioActualizacionComponent implements OnChanges {
 
   @Input() estudianteAActualizar!: Estudiante;
   @Output() alumnoAgregado = new EventEmitter<Estudiante>(); 
@@ -22,8 +22,6 @@ export class FormularioActualizacionComponent {
       nombre:['', Validators.required],
       dni:['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      tienePermisoAdmin: ['', [Validators.required]],
-      inscripciones:  [[]],
     });
   }
 
@@ -32,7 +30,6 @@ export class FormularioActualizacionComponent {
       this.createForm.get('nombre')?.patchValue(this.estudianteAActualizar.nombre);
       this.createForm.get('dni')?.patchValue(this.estudianteAActualizar.dni);
       this.createForm.get('email')?.patchValue(this.estudianteAActualizar.email);
-      this.createForm.get('tienePermisoAdmin')?.patchValue(this.estudianteAActualizar.tienePermisoAdmin);
     }
   }
   
@@ -42,6 +39,8 @@ export class FormularioActualizacionComponent {
      
     }else{
       this.createForm.value['id']=this.estudianteAActualizar.id
+      this.createForm.value['tienePermisoAdmin']=this.estudianteAActualizar.tienePermisoAdmin
+      this.createForm.value['inscripciones']=this.estudianteAActualizar.inscripciones
       let vendedorEdited=this.createForm.value;
       this.alumnoAgregado.emit(vendedorEdited)
       sessionStorage.setItem('usuario', vendedorEdited.nombre)

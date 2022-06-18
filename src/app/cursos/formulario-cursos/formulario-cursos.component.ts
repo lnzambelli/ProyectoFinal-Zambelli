@@ -7,13 +7,14 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
   templateUrl: './formulario-cursos.component.html',
   styleUrls: ['./formulario-cursos.component.scss']
 })
-export class FormularioCursosComponent {
+export class FormularioCursosComponent implements OnChanges {
 
   @Output() cursoAgregado = new EventEmitter<Curso>(); 
   @Input() cursoAActualizar!: Curso; 
 
   estaCreando: boolean = false;
   createForm!: FormGroup;
+  esEditable: boolean = true
 
   constructor(private fb: FormBuilder) {
     this.estaCreando = false;
@@ -33,10 +34,8 @@ export class FormularioCursosComponent {
       this.createForm.get('categoria')?.patchValue(this.cursoAActualizar.categoria);
       this.createForm.get('clases')?.patchValue(this.cursoAActualizar.clases);
     }
- 
   }
   
-
   onSubmit(): void {
     this.estaCreando = true;
     if(!this.cursoAActualizar){

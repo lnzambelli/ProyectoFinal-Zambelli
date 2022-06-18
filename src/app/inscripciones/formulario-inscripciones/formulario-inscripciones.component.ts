@@ -19,7 +19,7 @@ export class FormularioInscripcionesComponent implements OnInit, OnDestroy {
 
   constructor(private inscripcionesService: InscripcionesService,
               private cursosServices: CursosService,
-              private alumnosService: AlumnosService) { }
+              private alumnosServices: AlumnosService) { }
 
   ngOnInit(): void {
     this.obtenerAlumnoAEditar()
@@ -43,10 +43,18 @@ export class FormularioInscripcionesComponent implements OnInit, OnDestroy {
   agregar(curso: any){
       if(!this.alumno.inscripciones.includes(curso))
       this.alumno.inscripciones.push(curso)
+      this.alumnosServices.updateUser(this.alumno).subscribe(
+        ()=>{
+          
+      })
   }
 
   quitar(curso: any){
     this.alumno.inscripciones= this.alumno.inscripciones.filter(curs => curs!=curso)
+    this.alumnosServices.updateUser(this.alumno).subscribe(
+      ()=>{
+        
+    })
   }
 
 }

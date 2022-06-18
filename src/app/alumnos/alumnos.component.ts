@@ -24,36 +24,43 @@ export class AlumnosComponent implements OnInit, OnDestroy {
 
   obtenerAlumnos(){
       this.subscriptions=new Subscription();
-      this.subscriptions.add(this.alumnosServices.getStudents().subscribe(alumnos => this.arrAlumnos=alumnos))
+      this.subscriptions.add(this.alumnosServices.getUsersList().subscribe(alumnos => this.arrAlumnos=alumnos))
   }
 
   agregarAlumno(e: any){
-    let index=1;
-    if(this.arrAlumnos.length>0){
-      if(!e.id){
-        index=this.arrAlumnos.length+1;
-        e.id=index;
-        this.arrAlumnos.push(e);
-      }else{
-        let index=this.arrAlumnos.findIndex((x:Estudiante)=>x.id===e.id);
-        this.arrAlumnos[index]=e;
-      }
-      this.arrAlumnos = this.arrAlumnos.filter(stud => stud.id !== e.index) 
-    }else{
-      e.id=index;
-      this.arrAlumnos.push(e)
-      this.arrAlumnos = this.arrAlumnos.filter(stud => stud.id !== e.index)
+    let alumnoEncontrado = false;
+    this.arrAlumnos.find((al) => {
+      if (al.dni == e.dni){
+        alumnoEncontrado=true
+      } 
+    })
+    if (!alumnoEncontrado){
+      this.alumnosServices.createUser(e).subscribe(
+        ()=>{
+          this.obtenerAlumnos();
+        }
+      )
     }
-    this.alumnosServices.studentList = this.arrAlumnos
+    else{
+      this.alumnosServices.updateUser(e).subscribe(
+        ()=>{
+          this.obtenerAlumnos();
+        }
+      )
+    }
   }
 
   alumnoAEditar(e:Estudiante){
     this.estudianteAActualizar=e;
+    
   }
 
   alumnoAEliminar(e:Estudiante){
-    this.arrAlumnos = this.arrAlumnos.filter(stud => stud.id !== e.id)
-    this.alumnosServices.studentList = this.arrAlumnos;
+    this.alumnosServices.deleteUser(e).subscribe(
+      ()=>{
+        this.obtenerAlumnos();
+      }
+    )
   }
 
   ngOnDestroy(){

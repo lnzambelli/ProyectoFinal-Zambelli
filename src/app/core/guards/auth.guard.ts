@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) { }
 
   async canActivate(): Promise<boolean> {
-    if (!(sessionStorage.getItem('usuario')!=null && sessionStorage.getItem('permisoAdm')=='true' )) {
+    if (sessionStorage.getItem('usuario')==null) {
       this.router.navigate(['/login']);
       return false;
     }

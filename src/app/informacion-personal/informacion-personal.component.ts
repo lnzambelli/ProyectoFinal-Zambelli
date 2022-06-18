@@ -1,7 +1,7 @@
 import { CursosService } from './../cursos/cursos.service';
 import { AlumnosService } from './../alumnos/alumnos.service';
 import { Estudiante } from './../core/modelos/estudiante';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Curso } from '../core/modelos/curso';
 
@@ -11,10 +11,10 @@ import { Curso } from '../core/modelos/curso';
   templateUrl: './informacion-personal.component.html',
   styleUrls: ['./informacion-personal.component.scss']
 })
-export class InformacionPersonalComponent implements OnInit {
+export class InformacionPersonalComponent implements OnInit, OnDestroy {
 
   subscriptions!:Subscription;
-  arrAlumnos: Estudiante[] = []
+  arrAlumnos!: Estudiante[]
   arrCursos: Curso[] = []
   alumnoIngresado!: Estudiante
 
@@ -24,12 +24,16 @@ export class InformacionPersonalComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerAlumnos()
     this.obtenerCursos()
-    this.obtenerAlumnoIngresado()
   }
 
   obtenerAlumnos(){
     this.subscriptions=new Subscription();
-    this.subscriptions.add(this.alumnosServices.getStudents().subscribe(alumnos => this.arrAlumnos=alumnos))
+    this.subscriptions.add(this.alumnosServices.getUsersList().subscribe((alumnos) => {
+      let encontrado = alumnos.find(alum => alum.nombre == sessionStorage.getItem('usuario'))
+      if (encontrado)
+        this.alumnoIngresado=encontrado
+    } ))
+    
   }
 
   obtenerAlumnoIngresado(){
@@ -46,34 +50,25 @@ export class InformacionPersonalComponent implements OnInit {
   agregar(curso: string){
     if(!this.alumnoIngresado.inscripciones.includes(curso))
     this.alumnoIngresado.inscripciones.push(curso)
+    this.agregarAlumno(this.alumnoIngresado)
   }
 
   quitar(curso: String){
     this.alumnoIngresado.inscripciones= this.alumnoIngresado.inscripciones.filter(curs => curs!=curso)
+    this.agregarAlumno(this.alumnoIngresado)
+  }
+
+  agregarAlumno(e: Estudiante){
+    this.alumnosServices.updateUser(e).subscribe(
+      ()=>{
+        this.obtenerAlumnos();
+      }
+    )
+    sessionStorage.setItem('usuario', e.nombre)
   }
 
   ngOnDestroy(){
     this.subscriptions.unsubscribe()
-  }
-
-  agregarAlumno(e: any){
-    let index=1;
-    if(this.arrAlumnos.length>0){
-      if(!e.id){
-        index=this.arrAlumnos.length+1;
-        e.id=index;
-        this.arrAlumnos.push(e);
-      }else{
-        let index=this.arrAlumnos.findIndex((x:Estudiante)=>x.id===e.id);
-        this.arrAlumnos[index]=e;
-      }
-      this.arrAlumnos = this.arrAlumnos.filter(stud => stud.id !== e.index) 
-    }else{
-      e.id=index;
-      this.arrAlumnos.push(e)
-      this.arrAlumnos = this.arrAlumnos.filter(stud => stud.id !== e.index)
-    }
-    this.alumnosServices.studentList = this.arrAlumnos
   }
 
 

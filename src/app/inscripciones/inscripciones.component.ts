@@ -27,7 +27,7 @@ export class InscripcionesComponent implements OnInit, OnDestroy {
 
   obtenerAlumnos(){
     this.subscriptions=new Subscription();
-    this.subscriptions.add(this.alumnosServices.getStudents().subscribe(alumnos => this.arrAlumnos=alumnos))
+    this.subscriptions.add(this.alumnosServices.getUsersList().subscribe(alumnos => this.arrAlumnos=alumnos))
   }
 
   ngOnDestroy(){
