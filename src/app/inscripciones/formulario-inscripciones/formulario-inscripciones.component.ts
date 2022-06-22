@@ -33,7 +33,7 @@ export class FormularioInscripcionesComponent implements OnInit, OnDestroy {
 
   obtenerCursos(){
     this.subscriptions=new Subscription();
-    this.subscriptions.add(this.cursosServices.getCursos().subscribe(cursos => this.arrCursos=cursos))
+    this.subscriptions.add(this.cursosServices.getCourseList().subscribe(cursos => this.arrCursos=cursos))
   }
 
   ngOnDestroy(){
