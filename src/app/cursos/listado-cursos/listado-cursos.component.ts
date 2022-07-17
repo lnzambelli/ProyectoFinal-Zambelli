@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Curso } from 'src/app/core/modelos/curso';
 import { AppState } from 'src/app/state/app.state';
+import { deleteCurso, updateCurso } from 'src/app/state/cursos/cursos.actions';
 import { selectListaCursos } from 'src/app/state/cursos/cursos.selectors';
 
 @Component({
@@ -26,8 +27,12 @@ export class ListadoCursosComponent implements OnInit {
     this.cursos$ = this.store.select(selectListaCursos)
   }
 
-  deleteCurso(curso: Curso){
-    this.cursoParaEliminar.next(curso)
+  deleteCursos(curso: Curso){
+    this.store.dispatch(deleteCurso(curso))
+    setTimeout(() => {
+      location.reload()
+    }, 1000);
+    //this.cursoParaEliminar.next(curso)
 }
 
   editCurso(curso: Curso){

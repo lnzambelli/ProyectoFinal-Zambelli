@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Curso } from 'src/app/core/modelos/curso';
 import { CursoState } from 'src/app/core/modelos/curso.state';
-import { loadCursos, loadedCursos } from './cursos.actions';
+import { addCurso, loadCursos, loadedCursos,deleteCurso, updateCurso } from './cursos.actions';
 
 export const initialState: CursoState = { loading: false, cursos: [] }
 
@@ -14,6 +14,18 @@ export const cursosReducer = createReducer(
     
     on(loadedCursos, (state, {cursos}) => {
       return {...state, loading: false, cursos}
+    }),
+
+    on(addCurso, (state, {curso}) => {
+      return {...state, loading: false, curso}
+    }),
+
+    on(deleteCurso, (state, {curso}) => {
+      return {...state, loading: false, curso}
+    }),
+
+    on(updateCurso, (state, {curso}) => {
+      return {...state, loading: false, curso}
     }),
 );
 

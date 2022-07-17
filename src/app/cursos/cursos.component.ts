@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Curso } from '../core/modelos/curso';
 import { Store } from '@ngrx/store';
-import { loadCursos, loadedCursos } from '../state/cursos/cursos.actions';
+import { addCurso, loadCursos, loadedCursos, updateCurso } from '../state/cursos/cursos.actions';
 import { selectLoading } from '../state/cursos/cursos.selectors';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cursos',
@@ -21,12 +22,12 @@ export class CursosComponent implements OnInit {
 
   loading$: Observable<boolean> = new Observable();
   
-  constructor(private cursosServices: CursosService, private store: Store<any>) { }
+  constructor(private cursosServices: CursosService, private store: Store<any>, private router: Router) { }
 
   ngOnInit(): void {
       this.store.dispatch(loadCursos())
       this.loading$ = this.store.select(selectLoading)
-      //this.obtenerCursos()
+      this.obtenerCursos()
   }
 
   obtenerCursos(){
@@ -38,7 +39,6 @@ export class CursosComponent implements OnInit {
   }
 
   agregarCurso(e: any){
-    console.log(e)
     let cursoEncontrado = false;
     this.arrCursos.find((al) => {
       if (al.id == e.id){
@@ -46,19 +46,24 @@ export class CursosComponent implements OnInit {
       } 
     })
     if (!cursoEncontrado){
-      this.cursosServices.createCourse(e).subscribe(
+      this.store.dispatch(addCurso(e))
+      /*this.cursosServices.createCourse(e).subscribe(
         ()=>{
           this.obtenerCursos();
         }
-      )
+      )*/
     }
     else{
-      this.cursosServices.updateCourse(e).subscribe(
+      this.store.dispatch(updateCurso(e))
+      /*this.cursosServices.updateCourse(e).subscribe(
         ()=>{
           this.obtenerCursos();
         }
-      )
+      )*/
     }
+    setTimeout(() => {
+      location.reload()
+    }, 2000);
   }
 
   cursoAEditar(e:Curso){

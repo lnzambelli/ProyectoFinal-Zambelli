@@ -10,6 +10,37 @@ export const loadedCursos = createAction(
     props<{ cursos: Curso[] }>()
 );
 
+export const addCurso = createAction(
+  '[Curso] Add curso',
+  (curso: Curso) => ({ curso })
+ 
+);
+export const addCursoSuccess = createAction(
+  '[Curso] Add curso success',
+  
+  (curso: Curso) => ({ curso })
+);
+
+export const deleteCurso = createAction(
+  '[Curso] Delete curso',
+  (curso: Curso) => ({ curso })
+);
+
+export const deleteCursoSuccess = createAction(
+  '[Curso] Delete curso success',
+  (curso: Curso) => ({ curso })
+);
+
+export const updateCurso = createAction(
+  '[Curso] Update curso',
+  (curso: Curso) => ({ curso })
+);
+
+export const updateCursoSuccess = createAction(
+  '[Curso] Update curso success',
+  (curso: Curso) => ({ curso })
+);
+
 /*
 export const loadProductFeatures = createAction(
   '[ProductFeature] Load ProductFeatures'

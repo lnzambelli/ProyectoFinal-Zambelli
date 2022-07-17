@@ -11,13 +11,44 @@ export class CursosFeatureEffects {
 
   loadCursos$ = createEffect(() => this.actions$.pipe(
     ofType('[Cursos List] Load Cursos'),
-    mergeMap(() => this.cursosServices.getCursos()
+    mergeMap(() => this.cursosServices.getCourseList()
       .pipe(
         map(cursos => ({ type: '[Cursos List] Loaded success', cursos })),
         catchError(() => EMPTY)
       ))
     )
   );
+
+  deleteCurso$ = createEffect(() => this.actions$.pipe(
+    ofType('[Curso] Delete curso'),
+    mergeMap(({curso}) => this.cursosServices.deleteCourse(curso)
+      .pipe(
+        map(cursos => ({ type: '[Curso] Delete curso success', cursos })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
+  addCurso$ = createEffect(() => this.actions$.pipe(
+    ofType('[Curso] Add curso'),
+    mergeMap(({curso}) => this.cursosServices.createCourse(curso)
+      .pipe(
+        map(cursos => ({ type: '[Curso] Add curso success', cursos })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+
+  updateCurso$ = createEffect(() => this.actions$.pipe(
+    ofType('[Curso] Update curso'),
+    mergeMap(({curso}) => this.cursosServices.updateCourse(curso)
+      .pipe(
+        map(cursos => ({ type: '[Curso] Update curso success', cursos })),
+        catchError(() => EMPTY)
+      ))
+    )
+  );
+ 
 }
 
 /*
