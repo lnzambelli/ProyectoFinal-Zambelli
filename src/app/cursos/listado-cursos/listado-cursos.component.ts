@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Curso } from 'src/app/core/modelos/curso';
+import { AppState } from 'src/app/state/app.state';
+import { selectListaCursos } from 'src/app/state/cursos/cursos.selectors';
 
 @Component({
   selector: 'app-listado-cursos',
@@ -14,10 +18,14 @@ export class ListadoCursosComponent implements OnInit {
   @Output() cursoParaEliminar = new EventEmitter<Curso>();
   @Output() cursoParaEditar = new EventEmitter<Curso>(); 
 
-  constructor() { }
+  cursos$: Observable<any> = new Observable()
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.cursos$ = this.store.select(selectListaCursos)
   }
+
   deleteCurso(curso: Curso){
     this.cursoParaEliminar.next(curso)
 }

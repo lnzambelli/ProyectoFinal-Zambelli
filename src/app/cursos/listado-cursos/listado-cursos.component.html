@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="arrCursos" class="tableContainer" #table>
+<table mat-table [dataSource]="(cursos$ | async)" class="tableContainer" #table>
 
     <ng-container [matColumnDef]="column" *ngFor="let column of encabezados ">
        
